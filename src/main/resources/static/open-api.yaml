@@ -1,0 +1,304 @@
+openapi: 3.0.2
+
+info:
+  title: Inventory API
+  description: Inventory Management Apis
+  version: 1.0.0
+paths:
+  /api/v1/categories:
+    get:
+      tags:
+        - Categories
+      summary: Get all categories
+      description: Gets all the categories
+      operationId: getAllCategories
+      responses:
+        200:
+          description: Categories retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOfCategoryResponseDto'
+    post:
+      tags:
+        - Categories
+      summary: Create a category
+      description: Create a category
+      operationId: createCategory
+      requestBody:
+        description: Category body request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryCreateRequestDto'
+      responses:
+        201:
+          description: Category created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryCreateResponseDto"
+        400:
+          description: Invalid data supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"
+        409:
+          description: Category already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceAlreadyExistsResponse"
+
+  /api/v1/categories/{id}:
+    delete:
+      tags:
+        - Categories
+      summary: Deletes category by id
+      description: One id is informed to delete a category
+      operationId: deleteCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: Id that need to be informed
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Category deleted
+        400:
+          description: Invalid id supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"
+        404:
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceNotFound"
+    get:
+      tags:
+        - Categories
+      summary: Retrieves category by id
+      description: One id is informed to retrieve a category
+      operationId: getCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: Id that need to be informed
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Category retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponseDto'
+        400:
+          description: Invalid id supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"
+        404:
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceNotFound"
+
+    put:
+      tags:
+        - Categories
+      summary: Updates category by id
+      description: Id and name is informed to update a category
+      operationId: updateCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: Id that need to be informed
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Category body request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryUpdateRequestDto'
+      responses:
+        200:
+          description: Category updated
+        400:
+          description: Invalid data supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadUpdateRequestResponse"
+        404:
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceNotFound"
+
+components:
+  schemas:
+    ResourceAlreadyExistsResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Path of the error response
+          example: "about:blank"
+        title:
+          type: string
+          description: Error title
+          example: "Resource already exists"
+        status:
+          type: integer
+          description: HTTP status number
+          example: 409
+        detail:
+          type: string
+          description: Error detail
+          example: "Can not create existent resource"
+        instance:
+          type: string
+          description: Path called
+          example: "/api/v1/categories/"
+    ResourceNotFound:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Path of the error response
+          example: "about:blank"
+        title:
+          type: string
+          description: Error title
+          example: "Resource not found"
+        status:
+          type: integer
+          description: HTTP status number
+          example: 404
+        detail:
+          type: string
+          description: Error detail
+          example: "Resource not found"
+        instance:
+          type: string
+          description: Path called
+          example: "/api/v1/categories/{id}"
+    BadRequestResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Path of the error response
+          example: "about:blank"
+        title:
+          type: string
+          description: Error title
+          example: "Bad Request"
+        status:
+          type: integer
+          description: HTTP status number
+          example: 400
+        detail:
+          type: string
+          description: Error detail
+          example: "Invalid request content."
+        instance:
+          type: string
+          description: Path called
+          example: "/api/v1/categories/"
+    BadUpdateRequestResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Path of the error response
+          example: "about:blank"
+        title:
+          type: string
+          description: Error title
+          example: "Bad Request"
+        status:
+          type: integer
+          description: HTTP status number
+          example: 400
+        detail:
+          type: string
+          description: Error detail
+          example: "Invalid request content."
+        instance:
+          type: string
+          description: Path called
+          example: "/api/v1/categories/{id}"
+
+    CategoryResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the category
+          example: "01HFJH0FPPXGXAG96ASQ7ASGRC"
+        description:
+          type: string
+          description: Category description
+          example: "Category description"
+
+    ListOfCategoryResponseDto:
+      type: array
+      items:
+        properties:
+          id:
+            type: string
+            description: Id of the category
+            example: "01HFJH0FPPXGXAG96ASQ7ASGRC"
+          description:
+            type: string
+            description: Category description
+            example: "Category description"
+
+    CategoryCreateRequestDto:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Category description
+          example: "Category description"
+    CategoryCreateResponseDto:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Category description
+          example: "Category description"
+    CategoryUpdateRequestDto:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Category description
+          example: "Category description"
+    CategoryUpdateResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Category id
+          example: "Category id"
+        description:
+          type: string
+          description: Category description
+          example: "Category description"

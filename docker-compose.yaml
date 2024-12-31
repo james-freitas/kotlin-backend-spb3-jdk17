@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+
+  postgres_apijmeter:
+    container_name: postgres-apijmeter-kotlin
+    image: postgres:12-alpine
+    ports:
+      - '5431:5431'
+    command: -p 5431
+    environment:
+      POSTGRES_USER: apijmeter
+      POSTGRES_PASSWORD: apijmeter
+      POSTGRES_DB: apijmeter
+      PGDATA: /var/lib/postgresql/data/apijmeter/pgdata
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U apijmeter" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prometheus_apijmeter:
+    container_name: prometheus-apijmeter
+    image: prom/prometheus:latest
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    restart: always
+    networks:
+      - "api-jmeter-network"
+
+  grafana_apijmeter:
+    container_name: grafana-apijmeter
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./docker/grafana:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana/apijmeter
+    networks:
+      - "api-jmeter-network"
+
+volumes:
+  dbdata:
+    driver: local
+  prometheus_data: {}
+  grafana_data: {}
+
+networks:
+  api-jmeter-network:
+    driver: bridge
