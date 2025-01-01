@@ -58,9 +58,14 @@ class CategoryService(val categoryRepository: CategoryRepository) {
     fun findBy(categoryId: String): Category {
         val categoryFound = categoryRepository.findById(categoryId)
         if (categoryFound.isEmpty) {
-            logger.error("Could not delete category [$categoryId]. It was not found")
+            logger.error("Could not find category [$categoryId]. It was not found")
             throw ResourceNotFoundException()
         }
         return Category.valueOf(categoryFound.get())
+    }
+
+    fun deleteAll() {
+        categoryRepository.deleteAllCategories()
+        categoryRepository.flush()
     }
 }

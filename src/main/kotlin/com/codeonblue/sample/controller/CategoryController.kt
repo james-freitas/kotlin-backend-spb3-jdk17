@@ -56,6 +56,13 @@ class CategoryController(val categoryService: CategoryService) {
         logger.info("Category updated successfully")
         return ResponseEntity<Void>(HttpStatus.OK)
     }
+
+    @PostMapping("/cleanup")
+    fun deleteAll(): ResponseEntity<Void> {
+        categoryService.deleteAll()
+        logger.info("All categories deleted")
+        return ResponseEntity<Void>(HttpStatus.OK)
+    }
 }
 
 data class CategoryResponse(
