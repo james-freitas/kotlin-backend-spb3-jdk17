@@ -19,7 +19,13 @@ repositories {
 	mavenCentral()
 }
 
+extra["springCloudVersion"] = "2023.0.4"
+
+
 dependencies {
+
+	// Cloud
+	implementation("org.springframework.cloud:spring-cloud-starter")
 
 	// Database
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -57,4 +63,10 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+	}
 }
