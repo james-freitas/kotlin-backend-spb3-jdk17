@@ -50,3 +50,10 @@ docker-compose up
 1. To view metrics on Prometheus open in any browser: `http://localhost:9090`
 2. Send some requests to the API
 3. In **Graph** > **Graph** tab search for `http_server_requests_seconds_count` and press **Execute**
+
+## 📊 Grafana
+1. To view metrics on Grafana open in any browser: `http://localhost:3000/login` (user: **admin**, password: **admin**)
+2. Send some requests to the API
+3. Go to **Home** > **Dashboards** > **Services** and checkout the following dashboards:
+    - JVM (Micrometer)
+    - Spring Boot Statistics & Endpoint Metrics
