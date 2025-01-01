@@ -32,7 +32,7 @@ docker-compose up
 ./gradlew bootRun
 ```
 
-## 🧪 Performance tests
+## 🧪 Performance tests with JMeter
 1. Put the [Postgres jar](https://repo1.maven.org/maven2/org/postgresql/postgresql/42.2.20/postgresql-42.2.20.jar) on JMeter's lib folder
 2. Start the dependencies
 ```shell
@@ -45,6 +45,24 @@ docker-compose up
 ./gradlew bootRun
 ```
 4. Run JMeter tests which are on jmeter's folder
+
+## ⚙️ Performance tests with k6
+
+1. Start the dependencies
+```shell
+## run docker compose
+docker-compose up
+```
+2. Execute the application (it will start on port 8080)
+```shell
+## start web application
+./gradlew bootRun
+```
+3. Run the k6 tests
+```
+k6 run stress-test/k6-get-all.js  
+k6 run stress-test/k6-create-categories.js  
+```
 
 ## 📈 Prometheus
 1. To view metrics on Prometheus open in any browser: `http://localhost:9090`
