@@ -3,9 +3,9 @@ global:
   evaluation_interval: 5s # Evaluate rules every 15 seconds. The default is every 1 minute.
 
 scrape_configs:
-  - job_name: "api-jmeter-job"
+  - job_name: "sample-job"
     metrics_path: "/actuator/prometheus"
     static_configs:
       - targets: ["host.docker.internal:8080"]
         labels:
-          application: "api-jmeter"
+          application: "sample"

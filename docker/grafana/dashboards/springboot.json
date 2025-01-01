@@ -4406,8 +4406,8 @@
       {
         "current": {
           "selected": false,
-          "text": "api-jmeter",
-          "value": "api-jmeter"
+          "text": "sample",
+          "value": "sample"
         },
         "datasource": {
           "type": "prometheus",

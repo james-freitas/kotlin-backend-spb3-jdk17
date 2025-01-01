@@ -1,8 +1,8 @@
-# API JMeter
-Application with API accessing DB to test JMeter
+# Sample Kotlin Backend Application
+Sample API using Spring Boot
 
 ## ✔️ Requirements
-- Java Development Kit 21 (jdk21)
+- Java Development Kit 17 (jdk17)
 
 ## 🍔 Stack
 - Spring boot 3.2.4
@@ -17,8 +17,8 @@ Application with API accessing DB to test JMeter
 1. First add all environment variables or run through the IDE using the `local.env` file
 ```shell
 ## Variables you have to create on system or env file
-SPRING_DATASOURCE_URL=jdbc:postgresql://127.0.0.1:5431/apijmeter
-SPRING_DATASOURCE_USERNAME=apijmeter
+SPRING_DATASOURCE_URL=jdbc:postgresql://127.0.0.1:5431/sample
+SPRING_DATASOURCE_USERNAME=sample
 SPRING_DATASOURCE_PASSWORD=
 ```
 2. Start the dependencies
