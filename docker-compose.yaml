@@ -29,7 +29,6 @@ services:
       - "9090:9090"
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
-    restart: always
     networks:
       - "sample-network"
 
